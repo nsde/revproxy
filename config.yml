@@ -1,0 +1,72 @@
+# MAIN SETTINGS
+tunnels:
+  # - from: onlix.me
+  #   to: /
+
+  - from: /httpbin/proxied
+    to: https://httpbin.org
+
+  - from: /httpbin/not-proxied
+    to: https://httpbin.org
+    proxy: false
+
+  - from: /ip
+    to: https://checkip.amazonaws.com
+    proxy: false
+
+# seconds to wait for a response from the target server
+timeout: 30
+
+# SECURITY SETTINGS
+# will show a nicer error page if set to true
+nice-error-pages: true
+
+# behavior when an unencrypted HTTP request is made 
+# - "redirect" redirects to HTTPS
+# - "block" shows an error
+# - "allow" allows the request
+http: redirect
+
+allowed-methods:
+  - GET
+  - POST
+  - PUT
+  - DELETE
+  - HEAD
+  - OPTIONS
+  - CONNECT
+  - TRACE
+  - PATCH
+
+# rate limit per client IP
+rate-limits:
+  - 10 per second
+  - 100 per minute
+  - 1000 per hour
+
+# PRIVACY SETTINGS
+
+# the following setting values
+# can be either:
+# - "obfuscate" (randomly generated IP)
+# - "hide" (try to just remove it or use a generic one)
+# - "server" (use IP of the server) WARNING:  
+# - "target" (use IP of the target) WARNING: This will leak the IP of the target server
+# - "client" (use IP of the client) WARNING: This will 
+
+# IP of the proxy server itself. 
+server-ip: server
+
+# IP of the target server where the request is forwarded to
+target-ip: obfuscate
+
+# IP of the client who made the request
+client-ip: obfuscate
+
+# If set to true, all requests will use the "X-Forwarded-For" header to expose the client IP to the target server.
+expose-client-ip: false
+
+# PROXY SETTINGS
+# Please specify the proxy settings in your .env file.
+# Read the documentation for more information.
+# All tunnels will use the specified proxy, unless "proxy" is set to "false" on the corresponding tunnel.

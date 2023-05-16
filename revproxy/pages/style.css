@@ -1,0 +1,37 @@
+:root {
+    --accent: #045cc1;
+}
+
+* {
+    color: #ffffffe1;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: sans-serif;
+    scroll-behavior: smooth;
+
+}
+
+div.wrapper {
+    height: auto;
+    transform: translateY(-50%);
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    background: var(--accent);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body.error {
+    background: #611528;
+}
+
+footer {
+    padding-top: 0.5rem;
+    opacity: 0.5;
+}
