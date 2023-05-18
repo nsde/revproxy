@@ -1,25 +1,27 @@
 # MAIN SETTINGS
 tunnels:
-  # - from: onlix.me
-  #   to: /
-
-  - from: /httpbin/proxied
-    to: https://httpbin.org
-
-  - from: /httpbin/not-proxied
-    to: https://httpbin.org
-    proxy: false
+  - from: /testing
+    to: https://echo.hoppscotch.io
 
   - from: /ip
     to: https://checkip.amazonaws.com
     proxy: false
 
-# seconds to wait for a response from the target server
-timeout: 30
+  - from: /studyflix
+    to: https://studyflix.de
+
+  - from: /example
+    to: https://example.com
+
+  - from: /discord
+    to: https://discord.com
+
+# milliseconds to wait for a response from the target server
+timeout: 10000
 
 # SECURITY SETTINGS
-# will show a nicer error page if set to true
-nice-error-pages: true
+# will show a pretty error page if set to true
+pretty-error-pages: true
 
 # behavior when an unencrypted HTTP request is made 
 # - "redirect" redirects to HTTPS
@@ -40,22 +42,25 @@ allowed-methods:
 
 # rate limit per client IP
 rate-limits:
-  - 10 per second
-  - 100 per minute
-  - 1000 per hour
+  - 100 per second
+  - 1000 per minute
+  - 10000 per hour
 
 # PRIVACY SETTINGS
 
-# the following setting values
-# can be either:
+# the following setting values can help to protect privacy of the proxy and client.
+# please keep in mind that these settings can break some websites.
+
+# values can be either:
+# - "expose" (use the real IP)
 # - "obfuscate" (randomly generated IP)
-# - "hide" (try to just remove it or use a generic one)
-# - "server" (use IP of the server) WARNING:  
-# - "target" (use IP of the target) WARNING: This will leak the IP of the target server
-# - "client" (use IP of the client) WARNING: This will 
+# - "localhost" (sets the IP to 127.0.0.1)
+# - "server" (use IP of this server) WARNING: This will leak the IP of the proxy server
+# - "target" (use IP of the target) WARNING: This will leak the IP of the target server requested by the proxy server
+# - "client" (use IP of the client) WARNING: This will leak the IP of the client requesting the proxy server
 
 # IP of the proxy server itself. 
-server-ip: server
+server-ip: 
 
 # IP of the target server where the request is forwarded to
 target-ip: obfuscate

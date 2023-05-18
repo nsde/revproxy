@@ -1,14 +1,15 @@
 """A simple reverse proxy built using Flask."""
 
 import flask
-import requests
 import flask_limiter
 
+from flask_caching import Cache
 from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_limiter.util import get_remote_address
 
 import pages
 import config
+import system
 import tunnels
 
 app = flask.Flask(__name__, template_folder='pages')
@@ -21,37 +22,43 @@ limiter = flask_limiter.Limiter(
     app=app,
     default_limits=config.read()['rate-limits']
 )
+cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 
 allowed_methods = config.read()['allowed-methods']
 
-# for all requests
+# @cache.cached(timeout=60)
 @app.route('/', defaults={'path': ''}, methods=allowed_methods)
 @app.route('/<path:path>', methods=allowed_methods)
 def proxy(path):
     """Proxy the request."""
 
-    try:
-        url = tunnels.get_url(path)
-    except ValueError:
-        return pages.show_error('No tunnel found for the given path. ', 404)
+    arg = flask.request.args.get
 
-    print(url)
+    ext_url = arg('__path')
 
-    resp = requests.request(
-        method=flask.request.method,
-        url=url,
-        headers={key: value for (key, value) in flask.request.headers if key != 'Host'},
-        data=flask.request.get_data(),
-        cookies=flask.request.cookies,
-        allow_redirects=True,
-        timeout=config.read()['timeout'],
-    )
+    if not ext_url: # direct request
+        try:
+            url = tunnels.get_url(path)
 
-    return flask.Response(
-        resp.content,
-        resp.status_code,
-        headers=resp.raw.headers.items()
-    )
+        except ValueError as err:
+            if not path:
+                md = f"""No tunnel was found on `{path or "/"}`
+
+The following routes are available:
+
+"""
+                return pages.show_info(tunnels.add_tunnel_list(md))
+            else:
+                md = """Welcome!
+The following routes are available:
+
+"""
+
+                return pages.show_error(tunnels.add_tunnel_list(md), err, 404)
+    else:
+        url = ext_url
+
+    return system.respond(url)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=7771, debug=True, use_evalex=False)

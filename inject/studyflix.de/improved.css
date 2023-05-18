@@ -1,0 +1,69 @@
+/* Removes all bloat from the German leaning platform studyflix.de */
+/* With integrated auto-dark mode */
+
+#videojs-player, div.player-toggle, .huge-notification, .video-navigation, .video-layout-learning--sidebar, figure.figure, a.timestamp, div.important-moments, .footer--links-and-social {
+    display: none !important;
+}
+
+div.video-layout-learning::before {
+    display: none !important;
+}
+
+details.outline * {
+    background: rgb(213, 216, 219) !important;
+}
+
+ul.outline--links, ul.outline--links * {
+    background: rgb(233, 235, 239) !important;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+    * {
+        color: rgb(197, 197, 197) !important;
+        background-color: #151516 !important;
+        border-color: #9d9df08f !important;
+    }
+
+    a.navigation--logo {
+        color: transparent !important;
+    }
+
+    div.navigation {
+        border-bottom: 1px solid #5f5fca !important;
+        opacity: 0.7 !important;
+    }
+
+    div.navigation * {
+        border-color: #b4b4c2 !important;
+    }
+
+    h2 {
+        color: rgb(239, 238, 238) !important
+    }
+
+    div.company-card--image-wrapper {
+        background: #15151662 !important;
+    }
+
+    div.quick-action-card, div.quick-action-card *, div.subject-area-badge, div.subject-area-badge * {
+        background: #1c1c1e !important;
+    }
+
+    img.img-fluid {
+        filter: invert(1) hue-rotate(180deg) !important;
+        background: #eaeae9 !important;
+    }
+
+    footer {
+        filter: none !important;
+    }
+
+    details.outline * {
+        background: rgb(18, 18, 18) !important;
+    }
+    
+    ul.outline--links, ul.outline--links *, div.reference-box--content, div.reference-box--content * {
+        background: rgb(28, 28, 29) !important;
+    }
+}

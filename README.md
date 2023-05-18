@@ -17,5 +17,5 @@ Quite easy to set up.
 
 ## How?	
 - **Install:** `python -m pip install --upgrade -r requirements.txt`
-- **Configure:** edit `config.json`
-- **Run:** `python revproxy`
+- **Configure:** edit `config.yml`
+- **Run:** `python revproxy run-debug`
