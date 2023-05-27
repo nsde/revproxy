@@ -1,6 +1,9 @@
 import random
+import requests
 
 import config
+
+host_ip = requests.get('https://checkip.amazonaws.com', timeout=2).text.strip()
 
 def random_ip():
     """Generates a random IP address."""
@@ -20,3 +23,4 @@ def apply_privacy(setting: str, actual_value: str):
         'obfuscate': random_ip(),
         'localhost': localhost()
     }[setting]
+

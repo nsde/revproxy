@@ -25,7 +25,6 @@ def get_target(path: str) -> str:
     """Get the target for the given path."""
     
     target = get_tunnel(path)['to']
-    print(path, target)
 
     return target
 
@@ -37,7 +36,10 @@ def get_url(path: str):
     tunnel = get_tunnel(path)
     target = tunnel['to']
 
-    url = f'{target}/{path}'
+    url = '{target}/{path}'.format(
+        target=target,
+        path=path[len(tunnel['from']):]
+    )
 
     if url.endswith('/') and not original_path.endswith('/'):
         url = url[:-1]

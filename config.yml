@@ -55,15 +55,13 @@ rate-limits:
 # - "expose" (use the real IP)
 # - "obfuscate" (randomly generated IP)
 # - "localhost" (sets the IP to 127.0.0.1)
-# - "server" (use IP of this server) WARNING: This will leak the IP of the proxy server
-# - "target" (use IP of the target) WARNING: This will leak the IP of the target server requested by the proxy server
-# - "client" (use IP of the client) WARNING: This will leak the IP of the client requesting the proxy server
 
 # IP of the proxy server itself. 
 server-ip: 
 
 # IP of the target server where the request is forwarded to
-target-ip: obfuscate
+# Anything other than "expose" will break a lot of websites!
+target-ip: expose
 
 # IP of the client who made the request
 client-ip: obfuscate

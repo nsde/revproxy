@@ -21,4 +21,5 @@ def show_error(message: str, error: Exception, status_code: int) -> flask.Respon
 
 def show_info(message: str) -> flask.Response:
     """Show an info page."""
+
     return flask.render_template('info.html', message=markdown.markdown(message), css=css, js=js), 200

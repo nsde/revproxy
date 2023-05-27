@@ -2,9 +2,10 @@ import flask
 import urllib
 import requests
 
-import misc
 import pages
 import config
+import privacy
+import blocking
 import injecting
 
 def generate(response: requests.Response) -> bytes:
@@ -16,10 +17,14 @@ def generate(response: requests.Response) -> bytes:
 def respond(url: str) -> flask.Response:
     """Respond to the request."""
 
+    if blocking.should_block(url):
+        return pages.show_error(f'The website `{url}` is blocked.', None, 403)
+
     timeout = config.read()['timeout']
 
     headers = {key: value for (key, value) in flask.request.headers if key != 'Host'}
-    headers['Host'] = urllib.parse.urlparse(url).netloc
+
+    headers['Host'] = privacy.apply_privacy('target-ip', urllib.parse.urlparse(url).netloc)
 
     try:
         resp = requests.request(
@@ -42,6 +47,10 @@ This [website]({url}) tried to redirect too many times.
 
 Your `Referer`: `{flask.request.headers.get('Referer')}`        
 """, err, 504)
+    
+    except requests.exceptions.ConnectionError as err:
+        return pages.show_error(f'`{url}` could not be reached.', err, 502)
+
     except requests.exceptions.RequestException as err:
         raise err
         return pages.show_error('The website could not be requested.', err, 502)

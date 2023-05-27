@@ -7,10 +7,14 @@
         "**/.DS_Store": true,
         "**/Thumbs.db": true,
         "revproxy/__pycache__": true,
-        "revproxy/rvp.egg-info": true
+        "revproxy/rvp.egg-info": true,
+        "revproxy/pages/style.css.map": true,
+        "revproxy/pages/style.css": true
     },
     "hide-files.files": [
         "revproxy/__pycache__",
-        "revproxy/rvp.egg-info"
+        "revproxy/rvp.egg-info",
+        "revproxy/pages/style.css.map",
+        "revproxy/pages/style.css"
     ]
 }
